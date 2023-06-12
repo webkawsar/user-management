@@ -22,19 +22,14 @@ const schema = yup
     email: yup
       .string()
       .trim()
-      .email("Must be a valid email")
       .required("Email is required")
+      .email("Must be a valid email")
       .lowercase(),
-    password: yup
+    role: yup
       .string()
       .trim()
-      .required("Password is required")
-      .matches(/[a-z0-9]{6}/, "Must contain letter and number"),
-    confirmPassword: yup
-      .string()
-      .trim()
-      .required("Confirm password is required")
-      .oneOf([yup.ref("password")], "Confirm password don't match"),
+      .required("Role is required")
+      .oneOf(["Admin", "Support", "User"])
   })
   .required();
 
@@ -45,23 +40,18 @@ const EditUserForm = ({ user }) => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   });
 
   const onSubmit = (data) => {
-    console.log(data, 'data')
-    // registerUser({
-    //   firstName: data.firstName,
-    //   lastName: data.lastName,
-    //   email: data.email,
-    //   password: data.password,
-    //   confirmPassword: data.confirmPassword,
-    // });
+
+    updateUser({ id: user?.id, data });
   };
 
   useEffect(() => {
+
     if (isError) {
       // show error message
       toast.error(error?.data?.message ?? "Something went wrong!");
@@ -69,8 +59,9 @@ const EditUserForm = ({ user }) => {
 
     if (isSuccess) {
       // show success msg
-      toast.success("User created successfully");
+      toast.success("User updated successfully");
     }
+    
   }, [isError, isSuccess]);
 
   const { firstName, lastName, email, role } = user;
@@ -137,7 +128,7 @@ const EditUserForm = ({ user }) => {
                 )}
               </Form.Group>
 
-              <Form.Group className="mb-3" as={Col} md={6} controlId="role">
+              <Form.Group className="mb-3" as={Col} sm="12" md="12" lg="12" controlId="role">
                 <Form.Label>Role</Form.Label>
 
                 <Form.Select
