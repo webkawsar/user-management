@@ -24,18 +24,6 @@ import Loader from "../ui/Loader";
 import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
 
-// dev manager
-// CRUD
-// form handling
-// remote api server connection and handling
-// routing
-// context api
-// authentication (registration, login, logout)
-// advance login (forgot password, reset password, email sending)
-// image upload, pagination
-// securely data dealing
-// sass / scss
-// search functionality
 
 const App = () => {
   const authChecked = useAuthCheck();

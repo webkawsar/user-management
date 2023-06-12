@@ -74,7 +74,7 @@ const AddUser = () => {
 
     if (isSuccess) {
       // show success msg
-      toast.success(data?.message);
+      toast.success("User created successfully");
     }
   }, [isError, isSuccess]);
 

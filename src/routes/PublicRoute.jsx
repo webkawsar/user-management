@@ -8,7 +8,7 @@ import useAuth from '../hooks/useAuth';
 const PublicRoute = ({children}) => {
     const location = useLocation();
     const isLoggedIn = useAuth();
-    return isLoggedIn ? <Navigate to={location?.state?.from ? location?.state?.from : '/contacts'} /> : children
+    return isLoggedIn ? <Navigate to={location?.state?.from ? location?.state?.from : '/users'} /> : children
 };
 
 export default PublicRoute;
