@@ -50,7 +50,7 @@ const Login = () => {
       toast.success("Login successful");
 
       // redirect the user
-      navigate(location?.state?.from ? location?.state?.from : "/contacts");
+      navigate(location?.state?.from ? location?.state?.from : "/users");
     }
 
   }, [isError, isSuccess])

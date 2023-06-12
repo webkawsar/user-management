@@ -31,7 +31,7 @@ const Header = () => {
         <>
             <Navbar bg="light" expand="lg">
                 <Container>
-                    <Navbar.Brand as={Link} to="/" className='brand'>Dev Manager</Navbar.Brand>
+                    <Navbar.Brand as={Link} to="/" className='brand'>User Management</Navbar.Brand>
                     <Navbar.Toggle aria-controls="navbarScroll" />
                     <Navbar.Collapse id="navbarScroll">
                     <Nav
@@ -41,7 +41,7 @@ const Header = () => {
                             user ? 
                                 <>
                                     <Nav.Link as={NavLink} to="/users">Users</Nav.Link>
-                                    <Nav.Link as={NavLink} to="/dashboard/profile">Dashboard</Nav.Link>
+                                    <Nav.Link as={NavLink} to="/dashboard/create">Dashboard</Nav.Link>
                                     <Nav.Link onClick={logout}>Logout</Nav.Link>
                                 </>
                                 :

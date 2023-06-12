@@ -6,6 +6,7 @@ import "../App.css";
 import useAuthCheck from "../hooks/useAuthCheck";
 import Header from "../layouts/Header";
 import AddContact from "../pages/AddContact";
+import AddUser from "../pages/AddUser";
 import ContactDetails from "../pages/ContactDetails";
 import Dashboard from "../pages/Dashboard";
 import EditContact from "../pages/EditContact";
@@ -15,7 +16,6 @@ import Login from "../pages/Login";
 import ManagePassword from "../pages/ManagePassword";
 import NotFound from "../pages/NotFound";
 import Playground from "../pages/Playground";
-import Profile from "../pages/Profile";
 import Register from "../pages/Register";
 import ResetPassword from "../pages/ResetPassword";
 import UserContacts from "../pages/UserContacts";
@@ -123,8 +123,8 @@ const App = () => {
               </PrivateRoute>
             }
           >
-            <Route index element={<Profile />} />
-            <Route path="profile" element={<Profile />} />
+            <Route index element={<AddUser />} />
+            <Route path="create" element={<AddUser />} />
             <Route path="manage-password" element={<ManagePassword />} />
             <Route path="contacts" element={<UserContacts />} />
           </Route>

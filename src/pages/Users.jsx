@@ -28,7 +28,13 @@ const Users = () => {
   if (isLoading) {
     content = (
       <tr>
+        <td></td>
+        <td></td>
+        <td></td>
         <td>Loading.....</td>
+        <td></td>
+        <td></td>
+        <td></td>
       </tr>
     );
   }
