@@ -1,0 +1,46 @@
+{
+  "name": "dev-manager",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && echo /*    /index.html   200 > dist/_redirects",
+    "preview": "vite preview",
+    "lint": "yarn add -D prettier && yarn add -D eslint && yarn add -D babel-eslint && npx install-peerdeps --dev eslint-config-airbnb && yarn add -D eslint-config-prettier eslint-plugin-prettier"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^2.9.7",
+    "@reduxjs/toolkit": "^1.9.5",
+    "axios": "^0.27.2",
+    "bootstrap": "^5.2.0",
+    "qs": "^6.11.0",
+    "react": "^18.2.0",
+    "react-bootstrap": "^2.5.0",
+    "react-datepicker": "^4.8.0",
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.34.0",
+    "react-icons": "^4.4.0",
+    "react-redux": "^8.0.5",
+    "react-router-dom": "6",
+    "react-spinners": "^0.13.8",
+    "react-toastify": "^9.0.8",
+    "uuid": "^8.3.2",
+    "yup": "^0.32.11"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.15",
+    "@types/react-dom": "^18.0.6",
+    "@vitejs/plugin-react": "^2.0.0",
+    "babel-eslint": "^10.1.0",
+    "eslint-config-airbnb": "19.0.4",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "2.25.3",
+    "eslint-plugin-jsx-a11y": "6.5.1",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "7.28.0",
+    "eslint-plugin-react-hooks": "4.3.0",
+    "prettier": "^2.7.1",
+    "vite": "^3.0.0"
+  }
+}
