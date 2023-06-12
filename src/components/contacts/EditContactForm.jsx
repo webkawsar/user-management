@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as yup from "yup";
-import { useUpdateContactMutation } from "../../features/contacts/contactsAPI";
+import { useUpdateContactMutation } from "../../features/users/usersAPI";
 
 const schema = yup
   .object({

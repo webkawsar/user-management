@@ -5,9 +5,9 @@ import { useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
-  useDeleteContactMutation,
-  useGetContactQuery,
-} from "../features/contacts/contactsAPI";
+    useDeleteContactMutation,
+    useGetContactQuery,
+} from "../features/users/usersAPI";
 import ContactLoader from "../ui/ContactLoader";
 import formatImageUrl from "../utils/formatImageUrl";
 import { formateContact } from "../utils/formateContact";

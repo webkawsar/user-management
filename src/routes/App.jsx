@@ -9,7 +9,7 @@ import AddContact from "../pages/AddContact";
 import AddUser from "../pages/AddUser";
 import ContactDetails from "../pages/ContactDetails";
 import Dashboard from "../pages/Dashboard";
-import EditContact from "../pages/EditContact";
+import EditUser from "../pages/EditUser";
 import ForgotPassword from "../pages/ForgotPassword";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
@@ -18,7 +18,6 @@ import NotFound from "../pages/NotFound";
 import Playground from "../pages/Playground";
 import Register from "../pages/Register";
 import ResetPassword from "../pages/ResetPassword";
-import UserContacts from "../pages/UserContacts";
 import Users from "../pages/Users";
 import Loader from "../ui/Loader";
 import PrivateRoute from "./PrivateRoute";
@@ -95,10 +94,10 @@ const App = () => {
             }
           ></Route>
           <Route
-            path="/edit/contacts/:contactId"
+            path="/users/edit/:userId"
             element={
               <PrivateRoute>
-                <EditContact />
+                <EditUser />
               </PrivateRoute>
             }
           ></Route>
@@ -114,7 +113,6 @@ const App = () => {
             <Route index element={<AddUser />} />
             <Route path="create" element={<AddUser />} />
             <Route path="manage-password" element={<ManagePassword />} />
-            <Route path="contacts" element={<UserContacts />} />
           </Route>
 
           <Route path="/forgot-password" element={<ForgotPassword />} />

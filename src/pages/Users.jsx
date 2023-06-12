@@ -1,27 +1,41 @@
 import React, { useEffect } from "react";
-import { Table } from "react-bootstrap";
+import { Button, Table } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useDeleteUserMutation, useGetUsersQuery } from "../features/contacts/contactsAPI";
+import {
+  useDeleteUserMutation,
+  useGetUsersQuery,
+  useUpdateUserMutation,
+} from "../features/users/usersAPI";
 
 const Users = () => {
   const { data, isLoading, isSuccess, isError, error } = useGetUsersQuery();
-  const [deleteUser, { isSuccess: deleteIsSuccess, isError: deleteIsError, error: deleteError }] = useDeleteUserMutation();
+  const [
+    deleteUser,
+    { isSuccess: deleteIsSuccess, isError: deleteIsError, error: deleteError },
+  ] = useDeleteUserMutation();
+  const [
+    updateUser,
+    { isSuccess: updateIsSuccess, isError: updateIsError, error: updateError },
+  ] = useUpdateUserMutation();
+
+  const handleEdit = (id) => {
+
+  };
 
   const handleDelete = (id) => {
     deleteUser(id);
-  }
+  };
 
   useEffect(() => {
-
-    if(deleteIsError) {
+    if (deleteIsError) {
       toast.error(deleteError?.data?.message);
     }
 
-    if(deleteIsSuccess) {
-      toast.success('User deleted successfully');
+    if (deleteIsSuccess) {
+      toast.success("User deleted successfully");
     }
-
-  }, [deleteIsError, deleteIsSuccess])
+  }, [deleteIsError, deleteIsSuccess]);
 
   // decide what to render
   let content = null;
@@ -40,7 +54,6 @@ const Users = () => {
   }
 
   if (isSuccess) {
-
     content = data.users.map((user) => {
       const { id, firstName, lastName, email, role, isVerified } = user;
       return (
@@ -50,8 +63,18 @@ const Users = () => {
           <td>{email}</td>
           <td>{role}</td>
           <td>{`${isVerified}`}</td>
-          <td>Edit</td>
-          <td style={{cursor: 'pointer'}} onClick={() => handleDelete(id)}>Delete</td>
+          <td>
+            <Link to={`/users/edit/${id}`}>
+              <Button variant="warning">
+                Edit
+              </Button>
+            </Link>
+          </td>
+          <td>
+            <Button onClick={() => handleDelete(id)} variant="danger">
+              Delete
+            </Button>
+          </td>
         </tr>
       );
     });

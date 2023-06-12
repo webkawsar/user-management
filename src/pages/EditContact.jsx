@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import EditContactForm from "../components/contacts/EditContactForm";
-import { useGetContactQuery } from "../features/contacts/contactsAPI";
+import { useGetContactQuery } from "../features/users/usersAPI";
 import EditContactLoader from "../ui/EditContactLoader";
 import { formateContact } from "../utils/formateContact";
 

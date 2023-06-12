@@ -3,9 +3,6 @@ import { apiSlice } from "../api/apiSlice";
 export const contactsAPI = apiSlice.injectEndpoints({
   endpoints: (builder) => {
     return {
-      getUsers: builder.query({
-        query: () => `/api/v1/users`
-      }),
       addContact: builder.mutation({
         query: (contact) => {
           const { image, ...restData } = contact;
@@ -113,6 +110,19 @@ export const contactsAPI = apiSlice.injectEndpoints({
           } catch (error) {}
         },
       }),
+      getUsers: builder.query({
+        query: () => `/api/v1/users`
+      }),
+      getUser: builder.query({
+        query: (userId) => `/api/v1/users/${userId}`,
+      }),
+      updateUser: builder.mutation({
+        query: ({ id, data }) => ({
+          url: `/api/v1/users/${id}`,
+          method: "PATCH",
+          body: data
+        })
+      }),
       deleteUser: builder.mutation({
         query: (userId) => ({
           url: `/api/v1/users/${userId}`,
@@ -150,10 +160,12 @@ export const contactsAPI = apiSlice.injectEndpoints({
 });
 
 export const {
-  useGetUsersQuery,
   useAddContactMutation,
   useGetContactQuery,
   useUpdateContactMutation,
   useDeleteContactMutation,
+  useGetUsersQuery,
+  useGetUserQuery,
+  useUpdateUserMutation,
   useDeleteUserMutation
 } = contactsAPI;
