@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { Button, Table } from "react-bootstrap";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
   useDeleteUserMutation,
-  useGetUsersQuery,
-  useUpdateUserMutation,
+  useGetUsersQuery
 } from "../features/users/usersAPI";
 
 const Users = () => {
@@ -14,14 +14,8 @@ const Users = () => {
     deleteUser,
     { isSuccess: deleteIsSuccess, isError: deleteIsError, error: deleteError },
   ] = useDeleteUserMutation();
-  const [
-    updateUser,
-    { isSuccess: updateIsSuccess, isError: updateIsError, error: updateError },
-  ] = useUpdateUserMutation();
 
-  const handleEdit = (id) => {
-
-  };
+  const { user: loggedInUser } = useSelector((state) => state.auth);
 
   const handleDelete = (id) => {
     deleteUser(id);
@@ -36,6 +30,7 @@ const Users = () => {
       toast.success("User deleted successfully");
     }
   }, [deleteIsError, deleteIsSuccess]);
+
 
   // decide what to render
   let content = null;
@@ -57,7 +52,7 @@ const Users = () => {
     content = data.users.map((user) => {
       const { id, firstName, lastName, email, role, isVerified } = user;
       return (
-        <tr key={id}>
+        <tr style={{border: loggedInUser.id === id ? "3px solid green" : null }} key={id}>
           <td>{id}</td>
           <td>{`${firstName} ${lastName}`}</td>
           <td>{email}</td>
