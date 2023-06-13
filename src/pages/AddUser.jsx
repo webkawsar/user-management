@@ -2,9 +2,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import React, { useEffect } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as yup from "yup";
-import { useRegisterMutation } from "../features/auth/authAPI";
+import { useAddUserMutation } from "../features/users/usersAPI";
 
 const schema = yup
   .object({
@@ -24,16 +26,7 @@ const schema = yup
       .email("Must be a valid email")
       .required("Email is required")
       .lowercase(),
-    password: yup
-      .string()
-      .trim()
-      .required("Password is required")
-      .matches(/[a-z0-9]{6}/, "Must contain letter and number"),
-    confirmPassword: yup
-      .string()
-      .trim()
-      .required("Confirm password is required")
-      .oneOf([yup.ref("password")], "Confirm password don't match"),
+    role: yup.string().trim().oneOf(["Admin", "Support", "User"]),
   })
   .required();
 
@@ -41,13 +34,13 @@ const defaultValues = {
   firstName: "Kawsar",
   lastName: "Ahmed",
   email: "web.kawsarahmed@gmail.com",
-  password: "123456",
-  confirmPassword: "123456",
+  role: "User",
 };
 
 const AddUser = () => {
-  const [registerUser, { data, isLoading, isSuccess, isError, error }] =
-    useRegisterMutation();
+  const [addUser, { data, isLoading, isSuccess, isError, error }] =
+    useAddUserMutation();
+  const { user: loggedInUser } = useSelector((state) => state.auth);
   const {
     register,
     handleSubmit,
@@ -55,14 +48,14 @@ const AddUser = () => {
   } = useForm({
     resolver: yupResolver(schema),
   });
+  const navigate = useNavigate();
 
   const onSubmit = (data) => {
-    registerUser({
+    addUser({
       firstName: data.firstName,
       lastName: data.lastName,
       email: data.email,
-      password: data.password,
-      confirmPassword: data.confirmPassword,
+      role: data.role,
     });
   };
 
@@ -75,58 +68,52 @@ const AddUser = () => {
     if (isSuccess) {
       // show success msg
       toast.success("User created successfully");
+
+      navigate("/users");
     }
   }, [isError, isSuccess]);
 
-  const { firstName, lastName, email, password, confirmPassword } =
-    defaultValues;
+  const { firstName, lastName, email, role } = defaultValues;
 
   return (
     <div>
       <div>
-       
         <Row>
           <Col sm="12" md="6" lg="6" xl={{ span: 6, offset: 3 }}>
             <Form onSubmit={handleSubmit(onSubmit)}>
-              <Row>
-                <Col sm="12" md="6" lg="6">
-                  <Form.Group className="mb-3" controlId="firstName">
-                    <Form.Label>First name</Form.Label>
+              <Form.Group className="mb-3" controlId="firstName">
+                <Form.Label>First name</Form.Label>
 
-                    <Form.Control
-                      type="text"
-                      placeholder="Enter your first name"
-                      defaultValue={firstName}
-                      {...register("firstName")}
-                      isInvalid={!!errors.firstName}
-                    />
-                    {errors?.firstName?.message && (
-                      <Form.Control.Feedback type="invalid">
-                        {errors?.firstName?.message}
-                      </Form.Control.Feedback>
-                    )}
-                  </Form.Group>
-                </Col>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter your first name"
+                  defaultValue={firstName}
+                  {...register("firstName")}
+                  isInvalid={!!errors.firstName}
+                />
+                {errors?.firstName?.message && (
+                  <Form.Control.Feedback type="invalid">
+                    {errors?.firstName?.message}
+                  </Form.Control.Feedback>
+                )}
+              </Form.Group>
 
-                <Col sm="12" md="6" lg="6">
-                  <Form.Group className="mb-3" controlId="lastName">
-                    <Form.Label>Last name</Form.Label>
+              <Form.Group className="mb-3" controlId="lastName">
+                <Form.Label>Last name</Form.Label>
 
-                    <Form.Control
-                      type="text"
-                      placeholder="Enter your last name"
-                      defaultValue={lastName}
-                      {...register("lastName")}
-                      isInvalid={!!errors.lastName}
-                    />
-                    {errors?.lastName?.message && (
-                      <Form.Control.Feedback type="invalid">
-                        {errors?.lastName?.message}
-                      </Form.Control.Feedback>
-                    )}
-                  </Form.Group>
-                </Col>
-              </Row>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter your last name"
+                  defaultValue={lastName}
+                  {...register("lastName")}
+                  isInvalid={!!errors.lastName}
+                />
+                {errors?.lastName?.message && (
+                  <Form.Control.Feedback type="invalid">
+                    {errors?.lastName?.message}
+                  </Form.Control.Feedback>
+                )}
+              </Form.Group>
 
               <Form.Group className="mb-3" controlId="email">
                 <Form.Label>Email</Form.Label>
@@ -145,40 +132,35 @@ const AddUser = () => {
                 )}
               </Form.Group>
 
-              <Form.Group className="mb-3" controlId="password">
-                <Form.Label>Password</Form.Label>
+              {loggedInUser.role === "Admin" && (
+                <Form.Group
+                  className="mb-3"
+                  as={Col}
+                  sm="12"
+                  md="12"
+                  lg="12"
+                  controlId="role"
+                >
+                  <Form.Label>Role</Form.Label>
 
-                <Form.Control
-                  type="password"
-                  placeholder="Enter password"
-                  defaultValue={password}
-                  {...register("password")}
-                  isInvalid={!!errors.password}
-                />
-                {errors?.password?.message && (
+                  <Form.Select
+                    {...register("role")}
+                    defaultValue={role}
+                    isInvalid={errors?.role?.message}
+                  >
+                    <option value="" disabled>
+                      Select role
+                    </option>
+                    <option value="Admin">Admin</option>
+                    <option value="Support">Support</option>
+                    <option value="User">User</option>
+                  </Form.Select>
+
                   <Form.Control.Feedback type="invalid">
-                    {errors?.password?.message}
+                    {errors?.role?.message}
                   </Form.Control.Feedback>
-                )}
-              </Form.Group>
-
-              <Form.Group className="mb-3" controlId="confirmPassword">
-                <Form.Label>Confirm password</Form.Label>
-
-                <Form.Control
-                  type="password"
-                  placeholder="Enter confirm password"
-                  defaultValue={confirmPassword}
-                  {...register("confirmPassword")}
-                  isInvalid={!!errors.confirmPassword}
-                />
-
-                {errors?.confirmPassword?.message && (
-                  <Form.Control.Feedback type="invalid">
-                    {errors?.confirmPassword?.message}
-                  </Form.Control.Feedback>
-                )}
-              </Form.Group>
+                </Form.Group>
+              )}
 
               <Button variant="primary" type="submit" disabled={isLoading}>
                 Create User

@@ -110,6 +110,27 @@ export const contactsAPI = apiSlice.injectEndpoints({
           } catch (error) {}
         },
       }),
+      addUser: builder.mutation({
+        query: (data) => ({
+          url: `/api/v1/users`,
+          method: "POST",
+          body: data,
+        }),
+        // async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        //   try {
+        //     const result = await queryFulfilled;
+        //     dispatch(
+        //       apiSlice.util.updateQueryData(
+        //         "getContacts",
+        //         undefined,
+        //         (draftContacts) => {
+        //           draftContacts?.data.unshift(result?.data?.data);
+        //         }
+        //       )
+        //     );
+        //   } catch (error) {}
+        // },
+      }),
       getUsers: builder.query({
         query: () => `/api/v1/users`
       }),
@@ -164,6 +185,7 @@ export const {
   useGetContactQuery,
   useUpdateContactMutation,
   useDeleteContactMutation,
+  useAddUserMutation,
   useGetUsersQuery,
   useGetUserQuery,
   useUpdateUserMutation,

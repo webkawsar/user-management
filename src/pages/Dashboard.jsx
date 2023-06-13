@@ -3,9 +3,11 @@ import Col from "react-bootstrap/Col";
 import ListGroup from "react-bootstrap/ListGroup";
 import Row from "react-bootstrap/Row";
 import Tab from "react-bootstrap/Tab";
+import { useSelector } from "react-redux";
 import { NavLink, Outlet } from "react-router-dom";
 
 const Dashboard = () => {
+  const { user: loggedInUser } = useSelector((state) => state.auth);
   return (
     <div>
       <h1 className="text-center mb-5">Dashboard</h1>
