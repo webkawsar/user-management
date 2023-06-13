@@ -10,10 +10,12 @@ import Dashboard from "../pages/Dashboard";
 import EditUser from "../pages/EditUser";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
+import ManagePassword from "../pages/ManagePassword";
 import NotFound from "../pages/NotFound";
 import Register from "../pages/Register";
 import Users from "../pages/Users";
 import Loader from "../ui/Loader";
+import AdminRoute from "./AdminRoute";
 import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
 
@@ -77,6 +79,14 @@ const App = () => {
               </PrivateRoute>
             }
           ></Route>
+          <Route
+            path="/users/new"
+            element={
+              <AdminRoute>
+                <AddUser />
+              </AdminRoute>
+            }
+          ></Route>
 
           <Route
             path="/users/edit/:userId"
@@ -95,9 +105,9 @@ const App = () => {
               </PrivateRoute>
             }
           >
-            <Route index element={<AddUser />} />
-            <Route path="create" element={<AddUser />} />
-            {/* <Route path="manage-password" element={<ManagePassword />} /> */}
+            {/* <Route index element={<AddUser />} />
+            <Route path="create" element={<AddUser />} /> */}
+            <Route path="manage-password" element={<ManagePassword />} />
           </Route>
 
           {/* <Route path="/forgot-password" element={<ForgotPassword />} /> */}

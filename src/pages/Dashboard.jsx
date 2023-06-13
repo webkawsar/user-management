@@ -15,9 +15,6 @@ const Dashboard = () => {
         <Row>
           <Col sm={3}>
             <ListGroup>
-              <ListGroup.Item action as={NavLink} to="create">
-                Add User
-              </ListGroup.Item>
               <ListGroup.Item action as={NavLink} to="manage-password">
                 Manage Password
               </ListGroup.Item>

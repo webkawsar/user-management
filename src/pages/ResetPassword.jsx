@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as yup from "yup";
-import { axiosInstance } from "../config/axios";
+
 
 const schema = yup
   .object({
@@ -37,11 +37,11 @@ const ResetPassword = () => {
 
   const onSubmit = async (data) => {
     try {
-      const response = await axiosInstance.post("/auth/reset-password", {
-        code,
-        password: data.password,
-        passwordConfirmation: data.confirmPassword,
-      });
+      // const response = await axiosInstance.post("/auth/reset-password", {
+      //   code,
+      //   password: data.password,
+      //   passwordConfirmation: data.confirmPassword,
+      // });
 
       toast.success(
         "Password reset successfully, please login with new password"

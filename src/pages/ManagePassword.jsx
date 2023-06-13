@@ -1,10 +1,9 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import React, { useContext } from "react";
+import React from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import * as yup from "yup";
-import { AuthContext } from "../context/Auth.context";
 
 const schema = yup
   .object({
@@ -26,7 +25,7 @@ const schema = yup
   .required();
 
 const ManagePassword = (props) => {
-  const { changePassword } = useContext(AuthContext);
+  // const { changePassword } = useContext(AuthContext);
 
   const {
     register,
@@ -41,7 +40,7 @@ const ManagePassword = (props) => {
   const code = searchParams.get("code");
 
   const onSubmit = async (data) => {
-    changePassword(data);
+    // changePassword(data);
   };
 
   return (
