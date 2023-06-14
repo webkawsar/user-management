@@ -1,8 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import URL from "../../config/url";
 
 
-const isProduction = import.meta.env.PROD;
-const URL = isProduction ? import.meta.env.VITE_PRODUCTION_URL : import.meta.env.VITE_DEVELOPMENT_URL
 
 export const apiSlice = createApi({
     reducerPath: 'api',
