@@ -63,6 +63,9 @@ export const contactsAPI = apiSlice.injectEndpoints({
             // user logged out when self delete req send
             if(getState()?.auth?.user?.id === result?.data?.user?.id) {
               dispatch(userLoggedOut());
+
+              // clear local storage data
+              localStorage.clear();
             }
 
             dispatch(

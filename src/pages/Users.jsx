@@ -5,8 +5,9 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
   useDeleteUserMutation,
-  useGetUsersQuery
+  useGetUsersQuery,
 } from "../features/users/usersAPI";
+import Loader from "../ui/Loader";
 
 const Users = () => {
   const { data, isLoading, isSuccess, isError, error } = useGetUsersQuery();
@@ -31,52 +32,25 @@ const Users = () => {
     }
   }, [deleteIsError, deleteIsSuccess]);
 
-
   // decide what to render
   let content = null;
   if (isLoading) {
     content = (
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>Loading.....</td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "80vh",
+        }}
+      >
+        <Loader size={150} speed={2} />
+      </div>
     );
   }
 
   if (isSuccess) {
-    content = data.users.map((user) => {
-      const { id, firstName, lastName, email, role, isVerified } = user;
-      return (
-        <tr style={{border: loggedInUser.id === id ? "3px solid green" : null }} key={id}>
-          <td>{id}</td>
-          <td>{`${firstName} ${lastName}`}</td>
-          <td>{email}</td>
-          <td>{role}</td>
-          <td>{`${isVerified}`}</td>
-          <td>
-            <Link to={`/users/edit/${id}`}>
-              <Button variant="warning">
-                Edit
-              </Button>
-            </Link>
-          </td>
-          <td>
-            <Button onClick={() => handleDelete(id)} variant="danger">
-              Delete
-            </Button>
-          </td>
-        </tr>
-      );
-    });
-  }
-
-  return (
-    <div>
+    content = (
       <Table striped>
         <thead>
           <tr>
@@ -89,10 +63,40 @@ const Users = () => {
             <th>Delete</th>
           </tr>
         </thead>
-        <tbody>{content}</tbody>
+        <tbody>
+          {data.users.map((user) => {
+            const { id, firstName, lastName, email, role, isVerified } = user;
+            return (
+              <tr
+                style={{
+                  border: loggedInUser.id === id ? "3px solid green" : null,
+                }}
+                key={id}
+              >
+                <td>{id}</td>
+                <td>{`${firstName} ${lastName}`}</td>
+                <td>{email}</td>
+                <td>{role}</td>
+                <td>{`${isVerified}`}</td>
+                <td>
+                  <Link to={`/users/edit/${id}`}>
+                    <Button variant="warning">Edit</Button>
+                  </Link>
+                </td>
+                <td>
+                  <Button onClick={() => handleDelete(id)} variant="danger">
+                    Delete
+                  </Button>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
       </Table>
-    </div>
-  );
+    );
+  }
+
+  return <div>{content}</div>;
 };
 
 export default Users;
