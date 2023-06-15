@@ -39,12 +39,11 @@ const Header = () => {
                   <Nav.Link as={NavLink} to="/users">
                     Users
                   </Nav.Link>
-                  {user.role === "Admin" ||
-                    (user.role === "Support" && (
+                  {(user.role === "Admin" || user.role === "Support") && (
                       <Nav.Link as={NavLink} to="/users/new">
                         Add User
                       </Nav.Link>
-                    ))}
+                    )}
                   <Nav.Link as={NavLink} to="/dashboard/manage-password">
                     Dashboard
                   </Nav.Link>

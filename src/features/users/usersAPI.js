@@ -25,7 +25,7 @@ export const contactsAPI = apiSlice.injectEndpoints({
         // },
       }),
       getUsers: builder.query({
-        query: () => `/api/v1/users`
+        query: () => `/api/v1/users`,
       }),
       getUser: builder.query({
         query: (userId) => `/api/v1/users/${userId}`,
@@ -34,40 +34,46 @@ export const contactsAPI = apiSlice.injectEndpoints({
         query: ({ id, data }) => ({
           url: `/api/v1/users/${id}`,
           method: "PATCH",
-          body: data
-        })
+          body: data,
+        }),
+        async onQueryStarted({ id, data }, { queryFulfilled, dispatch }) {
+          try {
+            const result = await queryFulfilled;
+            dispatch(
+              apiSlice.util.updateQueryData("getUsers", undefined, (drafts) => {
+                const foundUser = drafts.users.find((user) => user.id == id);
+                foundUser.firstName = result.data.user.firstName;
+                foundUser.lastName = result.data.user.lastName;
+                foundUser.email = result.data.user.email;
+                foundUser.isVerified = result.data.user.isVerified;
+                foundUser.role = result.data.user.role;
+              })
+            );
+          } catch (error) {
+            // do nothing
+          }
+        },
       }),
       deleteUser: builder.mutation({
         query: (userId) => ({
           url: `/api/v1/users/${userId}`,
           method: "DELETE",
         }),
-        // async onQueryStarted(arg, { queryFulfilled, dispatch }) {
-        //   try {
-        //     const result = await queryFulfilled;
+        async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+          try {
+            
+            const result = await queryFulfilled;
+            dispatch(
+              apiSlice.util.updateQueryData("getUsers", undefined, (drafts) => {
+                const filteredUsers = drafts?.users.filter(
+                  (user) => user.id != arg
+                );
 
-        //     // update /contacts data
-        //     dispatch(
-        //       apiSlice.util.updateQueryData(
-        //         "getContacts",
-        //         undefined,
-        //         (draftContacts) => {
-
-        //           // console.log(JSON.parse(JSON.stringify(draftContacts)), 'draftContacts')
-
-        //           const filteredContacts = draftContacts?.data.filter(
-        //             (contact) => contact.id != result?.data?.data?.id
-        //           );
-                  
-        //           draftContacts.data = filteredContacts;
-        //           draftContacts.meta.pagination.total = draftContacts.meta.pagination.total - 1;
-                  
-        //           // console.log(JSON.parse(JSON.stringify(draftContacts)), 'draftContacts')
-        //         }
-        //       )
-        //     );
-        //   } catch (error) {}
-        // },
+                return { ...drafts, users: filteredUsers };
+              })
+            );
+          } catch (error) {}
+        },
       }),
     };
   },
@@ -78,5 +84,5 @@ export const {
   useGetUsersQuery,
   useGetUserQuery,
   useUpdateUserMutation,
-  useDeleteUserMutation
+  useDeleteUserMutation,
 } = contactsAPI;
