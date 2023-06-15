@@ -1,4 +1,5 @@
 import { apiSlice } from "../api/apiSlice";
+import { userLoggedOut } from "../auth/authSlice";
 
 export const contactsAPI = apiSlice.injectEndpoints({
   endpoints: (builder) => {
@@ -55,9 +56,15 @@ export const contactsAPI = apiSlice.injectEndpoints({
           url: `/api/v1/users/${userId}`,
           method: "DELETE",
         }),
-        async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        async onQueryStarted(arg, { queryFulfilled, dispatch, getState }) {
           try {
             const result = await queryFulfilled;
+
+            // user logged out when self delete req send
+            if(getState()?.auth?.user?.id === result?.data?.user?.id) {
+              dispatch(userLoggedOut());
+            }
+
             dispatch(
               apiSlice.util.updateQueryData("getUsers", undefined, (drafts) => {
                 const filteredUsers = drafts?.users.filter(
