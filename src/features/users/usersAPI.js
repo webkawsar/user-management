@@ -9,20 +9,16 @@ export const contactsAPI = apiSlice.injectEndpoints({
           method: "POST",
           body: data,
         }),
-        // async onQueryStarted(arg, { queryFulfilled, dispatch }) {
-        //   try {
-        //     const result = await queryFulfilled;
-        //     dispatch(
-        //       apiSlice.util.updateQueryData(
-        //         "getContacts",
-        //         undefined,
-        //         (draftContacts) => {
-        //           draftContacts?.data.unshift(result?.data?.data);
-        //         }
-        //       )
-        //     );
-        //   } catch (error) {}
-        // },
+        async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+          try {
+            const result = await queryFulfilled;
+            dispatch(
+              apiSlice.util.updateQueryData("getUsers", undefined, (drafts) => {
+                drafts.users.unshift(result?.data?.user);
+              })
+            );
+          } catch (error) {}
+        },
       }),
       getUsers: builder.query({
         query: () => `/api/v1/users`,
@@ -61,7 +57,6 @@ export const contactsAPI = apiSlice.injectEndpoints({
         }),
         async onQueryStarted(arg, { queryFulfilled, dispatch }) {
           try {
-            
             const result = await queryFulfilled;
             dispatch(
               apiSlice.util.updateQueryData("getUsers", undefined, (drafts) => {
