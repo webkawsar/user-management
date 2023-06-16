@@ -44,9 +44,9 @@ const Header = () => {
                         Add User
                       </Nav.Link>
                     )}
-                  <Nav.Link as={NavLink} to="/dashboard/manage-password">
+                  {/* <Nav.Link as={NavLink} to="/dashboard/manage-password">
                     Dashboard
-                  </Nav.Link>
+                  </Nav.Link> */}
                   <Nav.Link onClick={logout}>Logout</Nav.Link>
                 </>
               ) : (

@@ -6,8 +6,7 @@ import Loader from "../ui/Loader";
 
 const EditUser = () => {
   const { userId } = useParams();
-  const { data, isLoading, isSuccess, isError, error } =
-    useGetUserQuery(userId);
+  const { data, isLoading, isSuccess, isError, error } = useGetUserQuery(userId);
 
   // decide what to render
   let content = null;

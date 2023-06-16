@@ -20,16 +20,7 @@ const schema = yup
       .trim()
       .required("Last name is required")
       .min(2, "Last name must be at least 2 character"),
-    email: yup
-      .string()
-      .trim()
-      .required("Email is required")
-      .email("Must be a valid email")
-      .lowercase(),
-    role: yup
-      .string()
-      .trim()
-      .oneOf(["Admin", "Support", "User"]),
+    role: yup.string().trim().oneOf(["Admin", "Support", "User"]),
   })
   .required();
 
@@ -52,7 +43,6 @@ const EditUserForm = ({ user }) => {
   };
 
   useEffect(() => {
-
     if (isError) {
       // show error message
       toast.error(error?.data?.message ?? "Something went wrong!");
@@ -62,11 +52,9 @@ const EditUserForm = ({ user }) => {
       // show success msg
       toast.success("User updated successfully");
 
-      navigate('/users');
+      navigate("/users");
     }
-
   }, [isError, isSuccess]);
-
 
   const { id, firstName, lastName, email, role } = user;
 
@@ -75,59 +63,36 @@ const EditUserForm = ({ user }) => {
       <Row>
         <Col sm="12" md="6" lg="6" xl={{ span: 6, offset: 3 }}>
           <Form onSubmit={handleSubmit(onSubmit)}>
-            <Row>
-              <Col sm="12" md="6" lg="6">
-                <Form.Group className="mb-3" controlId="firstName">
-                  <Form.Label>First name</Form.Label>
-
-                  <Form.Control
-                    type="text"
-                    placeholder="Enter your first name"
-                    defaultValue={firstName}
-                    {...register("firstName")}
-                    isInvalid={!!errors.firstName}
-                  />
-                  {errors?.firstName?.message && (
-                    <Form.Control.Feedback type="invalid">
-                      {errors?.firstName?.message}
-                    </Form.Control.Feedback>
-                  )}
-                </Form.Group>
-              </Col>
-
-              <Col sm="12" md="6" lg="6">
-                <Form.Group className="mb-3" controlId="lastName">
-                  <Form.Label>Last name</Form.Label>
-
-                  <Form.Control
-                    type="text"
-                    placeholder="Enter your last name"
-                    defaultValue={lastName}
-                    {...register("lastName")}
-                    isInvalid={!!errors.lastName}
-                  />
-                  {errors?.lastName?.message && (
-                    <Form.Control.Feedback type="invalid">
-                      {errors?.lastName?.message}
-                    </Form.Control.Feedback>
-                  )}
-                </Form.Group>
-              </Col>
-            </Row>
-
-            <Form.Group className="mb-3" controlId="email">
-              <Form.Label>Email</Form.Label>
+            <Form.Group className="mb-3" controlId="firstName">
+              <Form.Label>First name</Form.Label>
 
               <Form.Control
-                type="email"
-                placeholder="Enter email"
-                defaultValue={email}
-                {...register("email")}
-                isInvalid={!!errors.email}
+                type="text"
+                placeholder="Enter your first name"
+                defaultValue={firstName}
+                {...register("firstName")}
+                isInvalid={!!errors.firstName}
               />
-              {errors?.email?.message && (
+              {errors?.firstName?.message && (
                 <Form.Control.Feedback type="invalid">
-                  {errors?.email?.message}
+                  {errors?.firstName?.message}
+                </Form.Control.Feedback>
+              )}
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="lastName">
+              <Form.Label>Last name</Form.Label>
+
+              <Form.Control
+                type="text"
+                placeholder="Enter your last name"
+                defaultValue={lastName}
+                {...register("lastName")}
+                isInvalid={!!errors.lastName}
+              />
+              {errors?.lastName?.message && (
+                <Form.Control.Feedback type="invalid">
+                  {errors?.lastName?.message}
                 </Form.Control.Feedback>
               )}
             </Form.Group>
