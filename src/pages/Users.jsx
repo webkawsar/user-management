@@ -54,7 +54,7 @@ const Users = () => {
   if (isSuccess) {
     content = (
       <Table striped>
-        <thead>
+        <thead style={{textAlign: "center"}}>
           <tr>
             <th>ID</th>
             <th>Name</th>
@@ -64,7 +64,7 @@ const Users = () => {
             <th>Actions</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody style={{textAlign: "center"}}>
           {data.users.map((user) => {
             const { id, firstName, lastName, email, role, isVerified } = user;
             return (

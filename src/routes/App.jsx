@@ -13,6 +13,7 @@ import Login from "../pages/Login";
 import ManagePassword from "../pages/ManagePassword";
 import NotFound from "../pages/NotFound";
 import Register from "../pages/Register";
+import UserDetails from "../pages/UserDetails";
 import Users from "../pages/Users";
 import Loader from "../ui/Loader";
 import AdminRoute from "./AdminRoute";
@@ -79,12 +80,22 @@ const App = () => {
               </PrivateRoute>
             }
           ></Route>
+
           <Route
             path="/users/new"
             element={
               <AdminRoute>
                 <AddUser />
               </AdminRoute>
+            }
+          ></Route>
+
+          <Route
+            path="/users/:userId"
+            element={
+              <PrivateRoute>
+                <UserDetails />
+              </PrivateRoute>
             }
           ></Route>
 
