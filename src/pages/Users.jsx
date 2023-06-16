@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import { Button, Table } from "react-bootstrap";
+import { BsFillEyeFill } from "react-icons/bs";
+import { FaPencilAlt, FaTrashAlt } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -59,8 +61,7 @@ const Users = () => {
             <th>Email</th>
             <th>Role</th>
             <th>isVerified</th>
-            <th>Edit</th>
-            <th>Delete</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -79,13 +80,18 @@ const Users = () => {
                 <td>{role}</td>
                 <td>{`${isVerified}`}</td>
                 <td>
-                  <Link to={`/users/edit/${id}`}>
-                    <Button variant="warning">Edit</Button>
+                  <Link to={`/users/${id}`}>
+                    <Button variant="primary">
+                      <BsFillEyeFill size={22} />
+                    </Button>
                   </Link>
-                </td>
-                <td>
-                  <Button onClick={() => handleDelete(id)} variant="danger">
-                    Delete
+                  <Link to={`/users/edit/${id}`} style={{color: 'inherit', margin: '0 10px'}}>
+                    <Button variant="warning">
+                      <FaPencilAlt size={22} />
+                    </Button>
+                  </Link>
+                  <Button variant="danger">
+                    <FaTrashAlt size={22} onClick={() => handleDelete(id)} />
                   </Button>
                 </td>
               </tr>
