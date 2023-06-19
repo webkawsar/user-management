@@ -26,15 +26,15 @@ const UserDetails = () => {
     );
   }
 
-  if(isError) {
+  if (isError) {
     content = (
-        <h2 style={{ color: "red", textAlign: "center", marginTop: "100px" }}>
-          {error?.data?.message ?? 'Something went wrong'}
-        </h2>
-      );
+      <h2 style={{ color: "red", textAlign: "center", marginTop: "100px" }}>
+        {error?.data?.message ?? "Something went wrong"}
+      </h2>
+    );
   }
 
-  if ((isSuccess && Object.keys(data?.user)?.length === 0)) {
+  if (isSuccess && Object.keys(data?.user)?.length === 0) {
     content = (
       <h2 style={{ color: "red", textAlign: "center", marginTop: "100px" }}>
         User not found to show details
@@ -55,7 +55,7 @@ const UserDetails = () => {
           <ListGroup.Item>Role: {role}</ListGroup.Item>
           <ListGroup.Item>Verified: {`${isVerified}`}</ListGroup.Item>
         </ListGroup>
-        <Card.Body style={{display: 'flex', justifyContent: 'space-between'}}>
+        <Card.Body style={{ display: "flex", justifyContent: "space-between" }}>
           <Button variant="primary">Edit</Button>
           <Button variant="danger">Delete</Button>
         </Card.Body>
@@ -63,7 +63,7 @@ const UserDetails = () => {
     );
   }
 
-  return <div style={{ width: '30vw', margin: '0 auto'}}>{content}</div>;
+  return <div style={{ width: "30vw", margin: "0 auto" }}>{content}</div>;
 };
 
 export default UserDetails;

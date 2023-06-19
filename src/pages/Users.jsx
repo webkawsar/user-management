@@ -70,7 +70,7 @@ const Users = () => {
             return (
               <tr
                 style={{
-                  border: loggedInUser.id === id ? "3px solid green" : null,
+                  border: loggedInUser?.id === id ? "3px solid green" : null,
                 }}
                 key={id}
               >
