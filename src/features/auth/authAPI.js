@@ -38,8 +38,11 @@ export const authAPI = apiSlice.injectEndpoints({
           }
         },
       }),
+      verify: builder.query({
+        query: (token) => `/auth/verify/${token}`
+      })
     };
   },
 });
 
-export const { useRegisterMutation, useLoginMutation } = authAPI;
+export const { useRegisterMutation, useLoginMutation, useVerifyQuery } = authAPI;

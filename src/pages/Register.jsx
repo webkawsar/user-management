@@ -2,6 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import React, { useEffect } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as yup from "yup";
 import { useRegisterMutation } from "../features/auth/authAPI";
@@ -55,6 +56,7 @@ const Register = () => {
   } = useForm({
     resolver: yupResolver(schema),
   });
+  const navigate = useNavigate();
 
   const onSubmit = (data) => {
     registerUser({
@@ -76,6 +78,9 @@ const Register = () => {
     if (isSuccess) {
       // show success msg
       toast.success(data?.message);
+
+      //navigate 
+      navigate('/');
     }
   }, [isError, isSuccess]);
 

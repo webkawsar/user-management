@@ -5,6 +5,7 @@ import { ToastContainer } from "react-toastify";
 import "../App.css";
 import useAuthCheck from "../hooks/useAuthCheck";
 import Header from "../layouts/Header";
+import AccountVerify from "../pages/AccountVerify";
 import AddUser from "../pages/AddUser";
 import Dashboard from "../pages/Dashboard";
 import EditUser from "../pages/EditUser";
@@ -63,6 +64,16 @@ const App = () => {
               </PublicRoute>
             }
           ></Route>
+
+          <Route
+            path="/account/verify"
+            element={
+              <PublicRoute>
+                <AccountVerify />
+              </PublicRoute>
+            }
+          ></Route>
+          
           <Route
             path="/login"
             element={
