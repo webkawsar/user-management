@@ -1,8 +1,9 @@
 import { useSelector } from "react-redux";
 
 const useAuth = () => {
-  const { token, user } = useSelector((state) => state.auth);
-  if (token && user) {
+  const { user } = useSelector((state) => state.auth);
+  
+  if (Object.keys(user)?.length) {
     return true;
   } else return false;
 };

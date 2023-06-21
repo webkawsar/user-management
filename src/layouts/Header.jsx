@@ -1,28 +1,46 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Container, Form, Nav, Navbar } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { userLoggedOut } from "../features/auth/authSlice";
+import { useLogoutQuery } from "../features/auth/authAPI";
 
 const Header = () => {
+  const [on, setOn] = useState(true);
+  const { data, isLoading, isSuccess, isError, error } = useLogoutQuery(undefined, {
+    skip: on
+  });
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const logout = () => {
-    // remove redux state data
-    dispatch(userLoggedOut());
-
-    // clear local storage data
-    localStorage.clear();
-
-    // show logout msg
-    toast.success("Logout successful");
-
-    // redirect to the user
-    navigate("/login");
+    // api req fire
+    setOn(false);
   };
+
+  useEffect(() => {
+
+    if(isError) {
+      toast.error("Logout failed!");
+    }
+
+    if(isSuccess) {
+      
+      // remove redux state data
+      dispatch(userLoggedOut());
+
+      // clear local storage data
+      localStorage.clear();
+
+      // show logout msg
+      toast.success("Logout successful");
+
+      // redirect to the user
+      navigate("/login");
+    }
+
+  }, [isError, isSuccess])
 
   return (
     <>

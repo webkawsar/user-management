@@ -19,19 +19,19 @@ export const authAPI = apiSlice.injectEndpoints({
         }),
         async onQueryStarted(arg, { queryFulfilled, dispatch }) {
           try {
+            
             const result = await queryFulfilled;
-            const { token, user } = result.data;
+            const { user } = result.data;
 
             // update redux state
             dispatch(
               userLoggedIn({
-                token,
-                user,
+                user
               })
             );
 
             // set data to local storage
-            localStorage.setItem("auth", JSON.stringify({ token, user }));
+            localStorage.setItem("auth", JSON.stringify(user));
             
           } catch (error) {
             // do nothing
@@ -40,9 +40,12 @@ export const authAPI = apiSlice.injectEndpoints({
       }),
       verify: builder.query({
         query: (token) => `/auth/verify/${token}`
+      }),
+      logout: builder.query({
+        query: () => `/auth/logout`
       })
     };
   },
 });
 
-export const { useRegisterMutation, useLoginMutation, useVerifyQuery } = authAPI;
+export const { useRegisterMutation, useLoginMutation, useVerifyQuery, useLogoutQuery } = authAPI;

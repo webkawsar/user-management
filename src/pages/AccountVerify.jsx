@@ -53,7 +53,7 @@ const AccountVerify = () => {
 
   if(isSuccess) {
     content = <div>
-      Account Verified
+      <h1>Account Verified</h1>
     </div>
   }
 
