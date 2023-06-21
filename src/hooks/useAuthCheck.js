@@ -11,7 +11,9 @@ const useAuthCheck = () => {
     const localAuth = localStorage?.getItem("auth");
     if (localAuth) {
 
+      const user = JSON.parse(localAuth);
       if (Object.keys(user)?.length) {
+
         dispatch(
             userLoggedIn({
             user

@@ -4,13 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useLogoutQuery } from "../features/auth/authAPI";
+import { userLoggedOut } from "../features/auth/authSlice";
 
 const Header = () => {
   const [on, setOn] = useState(true);
   const { data, isLoading, isSuccess, isError, error } = useLogoutQuery(undefined, {
     skip: on
   });
-  const { user } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state?.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -52,7 +53,7 @@ const Header = () => {
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <Nav className="me-auto my-2 my-lg-0">
-              {user ? (
+              {Object.keys(user)?.length ? (
                 <>
                   <Nav.Link as={NavLink} to="/users">
                     Users

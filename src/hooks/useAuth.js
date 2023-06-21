@@ -1,11 +1,13 @@
 import { useSelector } from "react-redux";
 
 const useAuth = () => {
-  const { user } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state?.auth);
   
   if (Object.keys(user)?.length) {
     return true;
-  } else return false;
+  } else {
+    return false;
+  }
 };
 
 export default useAuth;
