@@ -7,11 +7,9 @@ import useAuthCheck from "../hooks/useAuthCheck";
 import Header from "../layouts/Header";
 import AccountVerify from "../pages/AccountVerify";
 import AddUser from "../pages/AddUser";
-import Dashboard from "../pages/Dashboard";
 import EditUser from "../pages/EditUser";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
-import ManagePassword from "../pages/ManagePassword";
 import NotFound from "../pages/NotFound";
 import Register from "../pages/Register";
 import UserDetails from "../pages/UserDetails";
@@ -118,19 +116,6 @@ const App = () => {
               </PrivateRoute>
             }
           ></Route>
-
-          <Route
-            path="/dashboard"
-            element={
-              <PrivateRoute>
-                <Dashboard />
-              </PrivateRoute>
-            }
-          >
-            {/* <Route index element={<AddUser />} />
-            <Route path="create" element={<AddUser />} /> */}
-            <Route path="manage-password" element={<ManagePassword />} />
-          </Route>
 
           {/* <Route path="/forgot-password" element={<ForgotPassword />} /> */}
           {/* <Route path="/reset-password" element={<ResetPassword />} /> */}

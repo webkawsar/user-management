@@ -8,9 +8,12 @@ import { userLoggedOut } from "../features/auth/authSlice";
 
 const Header = () => {
   const [on, setOn] = useState(true);
-  const { data, isLoading, isSuccess, isError, error } = useLogoutQuery(undefined, {
-    skip: on
-  });
+  const { data, isLoading, isSuccess, isError, error } = useLogoutQuery(
+    undefined,
+    {
+      skip: on,
+    }
+  );
   const { user } = useSelector((state) => state?.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -21,13 +24,11 @@ const Header = () => {
   };
 
   useEffect(() => {
-
-    if(isError) {
+    if (isError) {
       toast.error("Logout failed!");
     }
 
-    if(isSuccess) {
-      
+    if (isSuccess) {
       // remove redux state data
       dispatch(userLoggedOut());
 
@@ -40,8 +41,7 @@ const Header = () => {
       // redirect to the user
       navigate("/login");
     }
-
-  }, [isError, isSuccess])
+  }, [isError, isSuccess]);
 
   return (
     <>
@@ -59,14 +59,13 @@ const Header = () => {
                     Users
                   </Nav.Link>
                   {(user.role === "Admin" || user.role === "Support") && (
-                      <Nav.Link as={NavLink} to="/users/new">
-                        Add User
-                      </Nav.Link>
-                    )}
-                  {/* <Nav.Link as={NavLink} to="/dashboard/manage-password">
-                    Dashboard
-                  </Nav.Link> */}
-                  <Nav.Link onClick={logout}>Logout</Nav.Link>
+                    <Nav.Link as={NavLink} to="/users/new">
+                      Add User
+                    </Nav.Link>
+                  )}
+                  <Nav.Link onClick={logout}>
+                    Logout
+                  </Nav.Link>
                 </>
               ) : (
                 <>
