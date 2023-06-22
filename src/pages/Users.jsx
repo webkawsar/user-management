@@ -17,7 +17,6 @@ const Users = () => {
     deleteUser,
     { isSuccess: deleteIsSuccess, isError: deleteIsError, error: deleteError },
   ] = useDeleteUserMutation();
-
   const { user: loggedInUser } = useSelector((state) => state.auth);
 
   const handleDelete = (id) => {
@@ -49,6 +48,10 @@ const Users = () => {
         <Loader size={150} speed={2} />
       </div>
     );
+  }
+
+  if(isError) {
+    content = <div>{error?.data?.message ?? "Something went wrong!"}</div>
   }
 
   if (isSuccess) {
