@@ -84,7 +84,7 @@ const AccountVerify = () => {
     content = (
       <div style={container}>
         <img src={successImg} alt="success_img" />
-        <h1>{data?.message}</h1>
+        <h1 style={{margin: '30px 0'}}>Account verified!</h1>
         <Link to="/login">
           <button style={greenBtn}>Login</button>
         </Link>
