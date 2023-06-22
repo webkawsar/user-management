@@ -25,7 +25,7 @@ export const contactsAPI = apiSlice.injectEndpoints({
         query: () => `/api/v1/users`,
       }),
       getUser: builder.query({
-        query: (userId) => `/api/v1/users/${userId}`,
+        query: (userId) => `/api/v1/users/${userId}`
       }),
       updateUser: builder.mutation({
         query: ({ id, data }) => ({
@@ -46,6 +46,15 @@ export const contactsAPI = apiSlice.injectEndpoints({
                 foundUser.role = result.data.user.role;
               })
             );
+
+            dispatch(apiSlice.util.updateQueryData("getUser", id.toString(), (draft) => {
+              draft.user.firstName = result.data.user.firstName;
+              draft.user.lastName = result.data.user.lastName;
+              draft.user.email = result.data.user.email;
+              draft.user.isVerified = result.data.user.isVerified;
+              draft.user.role = result.data.user.role;
+            }))
+
           } catch (error) {
             // do nothing
           }

@@ -1,13 +1,36 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Card, ListGroup } from "react-bootstrap";
-import { useParams } from "react-router-dom";
-import { useGetUserQuery } from "../features/users/usersAPI";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useDeleteUserMutation, useGetUserQuery } from "../features/users/usersAPI";
 import Loader from "../ui/Loader";
 
 const UserDetails = () => {
   const { userId } = useParams();
   const { data, isLoading, isSuccess, isError, error } =
     useGetUserQuery(userId);
+    const [
+      deleteUser,
+      { isSuccess: deleteIsSuccess, isError: deleteIsError, error: deleteError },
+    ] = useDeleteUserMutation();
+    const navigate = useNavigate();
+
+    const handleDelete = (id) => {
+      deleteUser(id);
+    };
+
+    useEffect(() => {
+      
+      if (deleteIsError) {
+        toast.error(deleteError?.data?.message ?? "Something went wrong!");
+      }
+  
+      if (deleteIsSuccess) {
+        toast.success("User deleted successfully");
+        navigate('/users');
+      }
+      
+    }, [deleteIsError, deleteIsSuccess]);
 
   // decide what to render
   let content = null;
@@ -56,8 +79,14 @@ const UserDetails = () => {
           <ListGroup.Item>Verified: {`${isVerified}`}</ListGroup.Item>
         </ListGroup>
         <Card.Body style={{ display: "flex", justifyContent: "space-between" }}>
-          <Button variant="primary">Edit</Button>
-          <Button variant="danger">Delete</Button>
+          <Button as={Link} to={`/users/edit/${id}`} variant="primary">
+            <Button variant="warning">
+              <FaPencilAlt size={22} />
+            </Button>
+          </Button>
+          <Button variant="danger">
+            <FaTrashAlt size={22} onClick={() => handleDelete(id)} />
+          </Button>
         </Card.Body>
       </Card>
     );

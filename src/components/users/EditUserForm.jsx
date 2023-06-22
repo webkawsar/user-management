@@ -20,6 +20,12 @@ const schema = yup
       .trim()
       .required("Last name is required")
       .min(2, "Last name must be at least 2 character"),
+      email: yup
+      .string()
+      .trim()
+      .email("Must be a valid email")
+      .required("Email is required")
+      .lowercase(),
     role: yup.string().trim().oneOf(["Admin", "Support", "User"]),
   })
   .required();
@@ -61,38 +67,60 @@ const EditUserForm = ({ user }) => {
   return (
     <div>
       <Row>
-        <Col sm="12" md="6" lg="6" xl={{ span: 6, offset: 3 }}>
+        <Col sm="12" md="6" lg="6" xl={{ span: 8, offset: 2 }}>
           <Form onSubmit={handleSubmit(onSubmit)}>
-            <Form.Group className="mb-3" controlId="firstName">
-              <Form.Label>First name</Form.Label>
+            <Row>
+              <Col>
+                <Form.Group className="mb-3" controlId="firstName">
+                  <Form.Label>First name</Form.Label>
+
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter your first name"
+                    defaultValue={firstName}
+                    {...register("firstName")}
+                    isInvalid={!!errors.firstName}
+                  />
+                  {errors?.firstName?.message && (
+                    <Form.Control.Feedback type="invalid">
+                      {errors?.firstName?.message}
+                    </Form.Control.Feedback>
+                  )}
+                </Form.Group>
+              </Col>
+              <Col>
+                <Form.Group className="mb-3" controlId="lastName">
+                  <Form.Label>Last name</Form.Label>
+
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter your last name"
+                    defaultValue={lastName}
+                    {...register("lastName")}
+                    isInvalid={!!errors.lastName}
+                  />
+                  {errors?.lastName?.message && (
+                    <Form.Control.Feedback type="invalid">
+                      {errors?.lastName?.message}
+                    </Form.Control.Feedback>
+                  )}
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <Form.Group className="mb-3" controlId="email">
+              <Form.Label>Email</Form.Label>
 
               <Form.Control
-                type="text"
-                placeholder="Enter your first name"
-                defaultValue={firstName}
-                {...register("firstName")}
-                isInvalid={!!errors.firstName}
+                type="email"
+                placeholder="Enter your email"
+                defaultValue={email}
+                {...register("email")}
+                isInvalid={!!errors.email}
               />
-              {errors?.firstName?.message && (
+              {errors?.email?.message && (
                 <Form.Control.Feedback type="invalid">
-                  {errors?.firstName?.message}
-                </Form.Control.Feedback>
-              )}
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="lastName">
-              <Form.Label>Last name</Form.Label>
-
-              <Form.Control
-                type="text"
-                placeholder="Enter your last name"
-                defaultValue={lastName}
-                {...register("lastName")}
-                isInvalid={!!errors.lastName}
-              />
-              {errors?.lastName?.message && (
-                <Form.Control.Feedback type="invalid">
-                  {errors?.lastName?.message}
+                  {errors?.email?.message}
                 </Form.Control.Feedback>
               )}
             </Form.Group>
