@@ -1,9 +1,11 @@
 import React, { useEffect } from "react";
 import { Button, Card, ListGroup } from "react-bootstrap";
+import { FaPencilAlt, FaTrashAlt } from "react-icons/fa";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDeleteUserMutation, useGetUserQuery } from "../features/users/usersAPI";
 import Loader from "../ui/Loader";
+
 
 const UserDetails = () => {
   const { userId } = useParams();
