@@ -8,8 +8,8 @@ import * as yup from "yup";
 import { useLoginMutation } from "../features/auth/authAPI";
 
 const defaultValues = {
-  email: "web.kawsarahmed@gmail.com",
-  password: "123456",
+  email: "",
+  password: "",
 };
 
 const schema = yup
