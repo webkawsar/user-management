@@ -81,10 +81,8 @@ const UserDetails = () => {
           <ListGroup.Item>Verified: {`${isVerified}`}</ListGroup.Item>
         </ListGroup>
         <Card.Body style={{ display: "flex", justifyContent: "space-between" }}>
-          <Button as={Link} to={`/users/edit/${id}`} variant="primary">
-            <Button variant="warning">
-              <FaPencilAlt size={22} />
-            </Button>
+          <Button variant="warning" as={Link} to={`/users/edit/${id}`} variant="primary">
+            <FaPencilAlt size={22} />
           </Button>
           <Button variant="danger">
             <FaTrashAlt size={22} onClick={() => handleDelete(id)} />
