@@ -31,9 +31,9 @@ const schema = yup
   .required();
 
 const defaultValues = {
-  firstName: "Kawsar",
-  lastName: "Ahmed",
-  email: "web.kawsarahmed@gmail.com",
+  firstName: "",
+  lastName: "",
+  email: "",
   role: "User",
 };
 

@@ -1,26 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import successImg from "../assets/success.png";
-import { useVerifyQuery } from "../features/auth/authAPI";
+import { useAccountVerifyQuery } from "../features/auth/authAPI";
 import Loader from "../ui/Loader";
 
 const AccountVerify = () => {
-  const { search } = useLocation();
-  const [token, setToken] = useState("");
+  const [searchParams] = useSearchParams();
+  const token = searchParams.get("token");
   const [isLoaded, setIsLoaded] = useState(true);
-  const { data, isLoading, isSuccess, isError, error } = useVerifyQuery(token, {
+  const { data, isLoading, isSuccess, isError, error } = useAccountVerifyQuery(token, {
     skip: isLoaded,
   });
   const navigate = useNavigate();
 
-  useEffect(() => {
 
-    const token = search.split("=")[1];
-    setToken(token);
+  useEffect(() => {
     setIsLoaded(false);
-    
-  }, [search]);
+  }, []);
 
   useEffect(() => {
 

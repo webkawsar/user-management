@@ -66,7 +66,7 @@ export const authAPI = apiSlice.injectEndpoints({
 export const {
   useRegisterMutation,
   useLoginMutation,
-  useVerifyQuery,
+  useAccountVerifyQuery,
   useForgetPasswordMutation,
   useResetVerifyQuery,
   useResetPasswordMutation,
