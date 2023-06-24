@@ -1,11 +1,14 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as yup from "yup";
-
+import {
+  useResetPasswordMutation,
+  useResetVerifyQuery,
+} from "../features/auth/authAPI";
 
 const schema = yup
   .object({
@@ -23,36 +26,63 @@ const schema = yup
   .required();
 
 const ResetPassword = () => {
+  const [searchParams] = useSearchParams();
+  const token = searchParams.get("token");
+  const [sendReq, setSendReq] = useState(true);
+  const { isSuccess, isError, error } = useResetVerifyQuery(token, {
+    skip: sendReq,
+  });
+  const [
+    resetPassword,
+    {
+      data,
+      isLoading,
+      isSuccess: resetIsSuccess,
+      isError: resetIsError,
+      error: resetError,
+    },
+  ] = useResetPasswordMutation();
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   });
-
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const code = searchParams.get("code");
 
   const onSubmit = async (data) => {
-    try {
-      // const response = await axiosInstance.post("/auth/reset-password", {
-      //   code,
-      //   password: data.password,
-      //   passwordConfirmation: data.confirmPassword,
-      // });
+    resetPassword({ ...data, token });
+  };
 
+  // token verify req send and handling
+  useEffect(() => {
+    setSendReq(false);
+  }, []);
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(error?.data?.message ?? "Something went wrong!");
+    }
+
+    if (isSuccess) {
+      toast.success("Password reset verification success!");
+    }
+  }, [isError, isSuccess]);
+
+  // password submit req handling
+  useEffect(() => {
+    if (resetIsError) {
+      toast.error(resetError?.data?.message ?? "Something went wrong!");
+    }
+
+    if (resetIsSuccess) {
       toast.success(
         "Password reset successfully, please login with new password"
       );
-
-      navigate("/login");
-    } catch (error) {
-      console.log(error.response);
-      toast.error("Issue in resetting password please try again!");
+      navigate('/login');
     }
-  };
+  }, [resetIsError, resetIsSuccess]);
 
   return (
     <div>
@@ -95,11 +125,7 @@ const ResetPassword = () => {
               )}
             </Form.Group>
 
-            <Button
-              variant="primary"
-              type="submit"
-              disabled={isSubmitting ? true : false}
-            >
+            <Button variant="primary" type="submit" disabled={isLoading}>
               Reset
             </Button>
           </Form>

@@ -109,7 +109,7 @@ const Login = () => {
               Log In
             </Button>
             <p className="mt-3">
-              Forgot password ? <Link to="/forgot-password">click here</Link>
+              Forget password ? <Link to="/forget-password">click here</Link>
             </p>
           </Form>
         </Col>

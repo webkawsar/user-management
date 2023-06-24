@@ -1,10 +1,11 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import * as yup from "yup";
-import { axiosInstance } from "../config/axios";
+import { useForgetPasswordMutation } from "../features/auth/authAPI";
+
 
 const schema = yup
   .object({
@@ -12,31 +13,36 @@ const schema = yup
   })
   .required();
 
-const ForgotPassword = () => {
+const ForgetPassword = () => {
+  const [forgetPassword, {data, isLoading, isSuccess, isError, error}] = useForgetPasswordMutation();
+
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   });
 
   const onSubmit = async (data) => {
-    try {
-      const response = await axiosInstance.post("/auth/forgot-password", {
-        email: data.email,
-      });
-
-      toast.success("Email is sent successfully with password reset link");
-    } catch (error) {
-      console.log(error.response.data.error, "ForgotPassword error");
-      toast.error("Error in sending Email");
-    }
+    forgetPassword(data);
   };
+
+  useEffect(() => {
+
+    if(isError) {
+      toast.error(error?.data?.message ?? "Something went wrong!");
+    }
+
+    if(isSuccess) {
+      toast.success("Email is sent with password reset link");
+    }
+    
+  }, [isError, isSuccess])
 
   return (
     <div>
-      <h2 className="text-center mb-3">Forgot Password</h2>
+      <h2 className="text-center mb-3">Forget Password</h2>
 
       <Row>
         <Col sm="12" md="6" lg="6" xl={{ span: 6, offset: 3 }}>
@@ -61,7 +67,7 @@ const ForgotPassword = () => {
             <Button
               variant="primary"
               type="submit"
-              disabled={isSubmitting ? true : false}
+              disabled={isLoading}
             >
               Submit
             </Button>
@@ -72,4 +78,4 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPassword;
+export default ForgetPassword;
