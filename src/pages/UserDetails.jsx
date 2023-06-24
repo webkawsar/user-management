@@ -81,7 +81,7 @@ const UserDetails = () => {
           <ListGroup.Item>Verified: {`${isVerified}`}</ListGroup.Item>
         </ListGroup>
         <Card.Body style={{ display: "flex", justifyContent: "space-between" }}>
-          <Button variant="warning" as={Link} to={`/users/edit/${id}`} variant="primary">
+          <Button variant="warning" as={Link} to={`/users/edit/${id}`}>
             <FaPencilAlt size={22} />
           </Button>
           <Button variant="danger">
