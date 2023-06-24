@@ -20,7 +20,7 @@ const Header = () => {
 
   const logout = () => {
     // api req fire
-    setOn(false);
+    setOn(prevState => !prevState);
   };
 
   useEffect(() => {
