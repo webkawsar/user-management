@@ -44,7 +44,7 @@ const AddUser = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   });
@@ -60,17 +60,16 @@ const AddUser = () => {
   };
 
   useEffect(() => {
+    
     if (isError) {
-      // show error message
       toast.error(error?.data?.message ?? "Something went wrong!");
     }
 
     if (isSuccess) {
-      // show success msg
-      toast.success("User created successfully");
-
+      toast.success(data?.message);
       navigate("/users");
     }
+    
   }, [isError, isSuccess]);
 
 
@@ -164,7 +163,7 @@ const AddUser = () => {
               )}
 
               <Button variant="primary" type="submit" disabled={isLoading}>
-                Create User
+                Submit
               </Button>
             </Form>
           </Col>

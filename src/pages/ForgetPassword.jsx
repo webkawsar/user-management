@@ -2,6 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import React, { useEffect } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as yup from "yup";
 import { useForgetPasswordMutation } from "../features/auth/authAPI";
@@ -15,7 +16,7 @@ const schema = yup
 
 const ForgetPassword = () => {
   const [forgetPassword, {data, isLoading, isSuccess, isError, error}] = useForgetPasswordMutation();
-
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -36,6 +37,7 @@ const ForgetPassword = () => {
 
     if(isSuccess) {
       toast.success("Email is sent with password reset link");
+      navigate('/');
     }
     
   }, [isError, isSuccess])
